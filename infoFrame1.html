@@ -8,18 +8,57 @@
     <script src="vue.js"></script>
 </head>
 <body>
-<div class="m-alert m-alert-success">
-    <slot name="iconTemp">
-        <i v-if="showicon" class="m-icon m-icon-success"></i>
-    </slot>
+    <div id="app1">
+        <p>1.对info组件的简单使用。注意在子组件中，props中的变量的type不能用引号！！</p>
+        <info style="height:50px;"></info>
+        <p>2.注意事项</p>
+        <p>在这里下面这个提示框的closeable作为props属性，需要用v-bind来定义，因为它是boolean型。</p>
+        <p>而同样作为props的type没有使用v-bind。是因为type是string型。如果type写成:type则后面的赋值就是一个父组件定义的一个变量了。</p>
+        <info type="success" :closeable=false></info>
+        <p>3.两处使用插槽slot：a.icon的设置；b. 内容设置；</p>
+        <info>
+            <template slot="iconTmp">
+                <i>我就是icon</i>
+            </template>
+            <template slot="titleTmp">
+                <p>我需要换行1</p>
+                <p>我需要换行2</p>
+                <p>我需要换行3</p>
+            </template>
+        </info>
+        <p>4.监控子组件的事件。我的坑。。。。子组件定义的事件handler的命名必须为小写！！不然父组件接收不到！</p>
+        <info @closeclick="pClose"></info>
 
-    <div class="m-content">
-        <slot name="titleTmp">
-            <span class="m-message">这些写消息内容</span>
-        </slot>
-
-        <i v-if="!closeable" class="m-closebtn m-icon-close" @click="closeHandle"></i>
     </div>
-</div>
 </body>
+<script src="infoFrameComponent.js"></script>
+<script>
+    /* 需求！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+     alert提醒框有四种状态：
+     info success error warning
+
+     设置的props：
+     type 提醒框类型 默认为info
+     title 提示信息 '这里有一个消息要提示'
+     closeable 是否禁用关闭 默认为true
+     showicon 是否显示图标 默认为true
+     style 设置提醒框样式 默认为{}
+
+     定制模板：
+     slot为iconTmp  定制icon模板
+     slot为titleTmp 定制提示信息结构
+
+     监控状态变化：
+     事件名closeclick   点击关闭X触发
+
+     */
+    let vm = new Vue({
+        el:'#app1',
+        methods:{
+            pClose(){
+                alert('子组件触发了，父组件想做些什么事情，可以在这里定义！！')
+            }
+        }
+    })
+</script>
 </html>
