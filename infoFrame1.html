@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>消息框组件应用</title>
+    <link rel="stylesheet" href="fontFace.css">
+    <link rel="stylesheet" href="infoFrame.css">
+    <script src="vue.js"></script>
+</head>
+<body>
+<div class="m-alert m-alert-success">
+    <slot name="iconTemp">
+        <i v-if="showicon" class="m-icon m-icon-success"></i>
+    </slot>
+
+    <div class="m-content">
+        <slot name="titleTmp">
+            <span class="m-message">这些写消息内容</span>
+        </slot>
+
+        <i v-if="!closeable" class="m-closebtn m-icon-close" @click="closeHandle"></i>
+    </div>
+</div>
+</body>
+</html>
